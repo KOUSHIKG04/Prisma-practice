@@ -1,15 +1,19 @@
 import { PrismaClient } from '@prisma/client'
 
-const prisma = new PrismaClient({
-    log: ['query'], // ['query', 'info', 'warn', 'error'] used for debugging
+const prisma = new PrismaClient( {
+    log: ['query']
 })
 
 async function main() {
     // ... you will write your Prisma Client queries here
-    const user = await prisma.user.create({
-        data: {
-            name: 'Bob',
-            email: '2k5zH@example.com',
+    const users = await prisma.user.findMany({});
+    console.log(users);
+    const user = await prisma.user.findUnique({
+        where: {
+            id: 2,
+        },
+        include: {
+            posts: true
         }
     })
     console.log(user);
